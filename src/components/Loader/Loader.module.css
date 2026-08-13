@@ -1,0 +1,29 @@
+.text {
+    position: relative;
+    color: #e5e5e5;
+    font-size: 15px;
+    font-weight: 600;
+    text-align: center;
+    letter-spacing: 0.3px;
+    max-width: 360px;
+    margin: 70px auto;
+    padding: 58px 16px 14px;
+}
+
+.text::before {
+    content: "";
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    width: 34px;
+    height: 34px;
+    margin-left: -17px;
+    border: 4px solid #383838;
+    border-top-color: #e50914;
+    border-radius: 50%;
+    animation: spin 750ms linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
