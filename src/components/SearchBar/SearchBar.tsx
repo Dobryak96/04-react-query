@@ -1,33 +1,39 @@
-import styles from "./SearchBar.module.css";
 import toast from "react-hot-toast";
+import styles from "./SearchBar.module.css";
 
 interface SearchBarProps {
-  onSubmit: (userInput: string) => void;
-  onClearSearch: ()=>void
+  onSubmit: (query: string) => void;
 }
-const SearchBar = ({ onSubmit, onClearSearch }: SearchBarProps) => {
-  const handleForm = (formData: FormData) => {
-    const query = formData.get("query") as string;
-    if (query.trim() === "") {
+
+export default function SearchBar({ onSubmit }: SearchBarProps) {
+  const handleSubmit = (formData: FormData) => {
+    const query = formData.get("query");
+    if (typeof query !== "string") {
+      return;
+    }
+
+    const normalizedQuery = query.trim();
+
+    if (normalizedQuery === "") {
       toast.error("Please enter your search query.");
       return;
     }
-    onSubmit(query.trim());
+    onSubmit(normalizedQuery);
   };
 
   return (
-    <header className={styles.header}>
-      <div className={styles.container}>
-        <a
-          className={styles.link}
-          href="https://www.themoviedb.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by TMDB
-        </a>
-        <div className={styles.formWrapper}>
-          <form className={styles.form} action={handleForm}>
+    <>
+      <header className={styles.header}>
+        <div className={styles.container}>
+          <a
+            className={styles.link}
+            href="https://www.themoviedb.org/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Powered by TMDB
+          </a>
+          <form className={styles.form} action={handleSubmit}>
             <input
               className={styles.input}
               type="text"
@@ -40,12 +46,8 @@ const SearchBar = ({ onSubmit, onClearSearch }: SearchBarProps) => {
               Search
             </button>
           </form>
-          <button type="button" className={styles.button} onClick={onClearSearch}>
-            Clear
-          </button>
         </div>
-      </div>
-    </header>
+      </header>
+    </>
   );
-};
-export default SearchBar;
+}
