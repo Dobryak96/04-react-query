@@ -25,4 +25,3 @@ const fetchMovies = async (
 };
 
 export default fetchMovies;
-
